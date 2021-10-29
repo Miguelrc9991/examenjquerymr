@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/lib/jquery-3.6.0.js"></script>
+    <link rel="stylesheet" href="/lib/css/bootstrap.min.css" />
+</head>
+<body>
+    <div id="menu"></div>
+    <h1>Personajes y Series</h1>
+    <div class="container">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Seleccione una serie</label>
+
+            <select class="form-control" id="selectserie">
+                <option value="1">Juego de tronos</option>
+                <option value="2">The mandalorian</option>
+                <option value="3">Stranger things</option>
+                <option value="4">Narcos</option>
+                <option value="5">The boys</option>
+                <option value="6">The big bang theory</option>
+                <option value="7">Campeones</option>
+                <option value="8">Como conocí a vustra madre</option>
+                <option value="9">La casa de papel</option>
+
+                
+            </select>       
+         </div>    
+        <div class="mb-3">
+            
+           <label for="exampleInputEmail1" class="form-label">Seleccione un Personaje</label>
+           <div id="selectpersonajes"></div>
+           
+        </div>    
+        <button id="btn_guardar" class="btn btn-primary">Guardar Cambios</button>
+
+    
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#menu").load("./index.html");
+            var url = "https://apiseriespersonajes.azurewebsites.net/api/Personajes"
+            $.ajax({
+                "url":url
+                ,"method":"GET",
+                "dataType":"json",
+                "success": function(data){
+                    var opcion = $("<select>")
+                    $.each(data,function(index,person){
+                        
+                            opcion.append($("<option>",{"text":person.nombre}));
+
+                                $("#selectpersonajes").append(opcion)
+                    })
+
+
+
+            },
+            "error":function(error) {
+                console.log(error);
+            }               
+
+
+            })
+
+
+
+
+
+        })
+
+
+
+
+    </script>
+</body>
+</html>

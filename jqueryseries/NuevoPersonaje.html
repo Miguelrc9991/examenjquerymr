@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/lib/jquery-3.6.0.js"></script>
+    <link rel="stylesheet" href="/lib/css/bootstrap.min.css" />
+</head>
+<body>
+    <div id="menu"></div>
+    <div class="container">
+        <h1>Nuevo personaje</h1>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="inputNombre" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Imagen</label>
+            <input type="text" class="form-control" id="inputImagen" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Serie</label>
+            <select class="form-control" id="selectserie">
+                <option value="1">Juego de tronos</option>
+                <option value="2">The mandalorian</option>
+                <option value="3">Stranger things</option>
+                <option value="4">Narcos</option>
+                <option value="5">The boys</option>
+                <option value="6">The big bang theory</option>
+                <option value="7">Campeones</option>
+                <option value="8">Como conocí a vustra madre</option>
+                <option value="9">La casa de papel</option>
+
+                
+            </select>
+          </div>
+          <button id="btn_insertar" class="btn btn-primary">Insertar Personaje</button>
+</div>
+  
+<script>
+$(document).ready(function(){
+
+    var url_api_series="https://apiseriespersonajes.azurewebsites.net";
+    $("#menu").load("./index.html");
+
+    $("#btn_insertar").click(function(){
+                var request = "/api​/Personajes";
+                var personaje = {
+                    "idPersonaje":1,
+                    "nombre":$("#inputNombre").val(),
+                    "imagen":$("#inputImagen").val(),
+                    "idSerie":parseInt( $("#selectserie option:selected").val())
+                }
+
+                console.log(personaje);
+
+                $.ajax({
+                    "url":"https://apiseriespersonajes.azurewebsites.net/api/Personajes",
+                    "method":"POST",
+                    "data":JSON.stringify(personaje),
+                    "contentType":"application/json",
+                    "success":function(data){
+                        console.log("se ha insertado el personaje");
+                        window.location.replace("./PersonajesySeries.html")
+                    },
+                    "error":function(error){
+                        console.log(error);
+                    }
+                });
+            });
+
+
+
+
+
+})
+
+
+
+
+</script>
+</body>
+</html>
